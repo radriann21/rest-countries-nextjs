@@ -11,7 +11,7 @@ export const CountryItem = ({ country }: { country: CountryItem }) => {
           <ul className="mt-2">
             <li className="flex items-center space-x-1">
               <span className="font-bold">Population:</span>
-              <span>{country.population}</span>
+              <span>{country.population.toLocaleString()}</span>
             </li>
             <li className="flex items-center space-x-1">
               <span className="font-bold">Region:</span>
