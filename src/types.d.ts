@@ -28,3 +28,8 @@ type CountryItem = {
 }
 
 type Countries = CountryItem[]
+
+type ErrorObject = {
+  error: boolean;
+  message: string;
+}

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Nunito_Sans} from "next/font/google";
 import { Navigation } from "@/components/Navigation/Navigation";
+import { CountryStoreProvider } from "@/providers/CountryStoreProvider";
+import { QueryProvider } from "@/providers/QueryProvider";
+
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -19,11 +22,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${nunitoSans.variable} max-w-full min-h-screen font-global bg-very-light-gray`}>
-        <Navigation />
-        {children}
+    <html lang="en" className="dark scroll-smooth">
+      <body className={`${nunitoSans.variable} max-w-full min-h-screen font-global bg-very-light-gray dark:bg-very-dark-blue text-very-dark-blue-light-mode dark:text-white`}>
+        <CountryStoreProvider>
+          <QueryProvider>
+            <Navigation />
+            {children}
+          </QueryProvider>
+        </CountryStoreProvider>
       </body>
     </html>
-  );
+  )
 }

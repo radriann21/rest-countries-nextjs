@@ -1,17 +1,26 @@
+"use client"
 import { Select, SelectTrigger, SelectItem, SelectValue, SelectContent } from "@/components/ui/select"
+import { useCountryStore } from "@/providers/CountryStoreProvider"
 
 export const SelectInput = () => {
+  const { setFilterRegion } = useCountryStore((state) => state)
+  const regions = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania"]
+
   return (
-    <Select>
+    <Select onValueChange={(value) => setFilterRegion(value)}>
       <SelectTrigger className="p-6 shadow-md mt-6 sm:mt-0">
-        <SelectValue placeholder="Filter by Region">Filter by Region</SelectValue>
+        <SelectValue placeholder="Filter by Region" />
       </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="africa">Africa</SelectItem>
-        <SelectItem value="america">America</SelectItem>
-        <SelectItem value="asia">Asia</SelectItem>
-        <SelectItem value="europe">Europe</SelectItem>
-        <SelectItem value="oceania">Oceania</SelectItem>
+      <SelectContent className="text-sm">
+        {
+          regions.map((region, index) => (
+            <SelectItem 
+              key={index} 
+              value={region.toLowerCase()}>
+                {region}
+            </SelectItem>
+          ))
+        }
       </SelectContent>
     </Select>
   )
