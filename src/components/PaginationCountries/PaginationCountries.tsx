@@ -6,15 +6,48 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
+  PaginationEllipsis,
 } from "@/components/ui/pagination";
 import { useCountryStore } from "@/providers/CountryStoreProvider";
 
 export const PaginationCountries = () => {
   const { countries, currentPage, countriesPerPage, setCurrentPage } =
     useCountryStore((state) => state);
+
   const totalPages = Math.ceil(countries.length / countriesPerPage);
 
-  const pageNumber = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const getVisiblePages = (currentPage:number, totalPages:number) => {
+    const delta = 1; 
+    const range = [];
+
+    if (totalPages > 1) {
+      range.push(1);
+    }
+
+    if (currentPage - delta > 2) {
+      range.push("...");
+    }
+
+    for (
+      let i = Math.max(2, currentPage - delta);
+      i <= Math.min(totalPages - 1, currentPage + delta);
+      i++
+    ) {
+      range.push(i);
+    }
+
+    if (currentPage + delta < totalPages - 1) {
+      range.push("...");
+    }
+
+    if (totalPages > 1) {
+      range.push(totalPages);
+    }
+
+    return range;
+  };
+
+  const visiblePages = getVisiblePages(currentPage, totalPages);
 
   return (
     <Pagination className="mx-auto w-fit mt-10">
@@ -26,27 +59,41 @@ export const PaginationCountries = () => {
             aria-disabled={currentPage === 1}
           />
         </PaginationItem>
-        {pageNumber.map((page) => (
-          <PaginationItem key={page}>
-            <PaginationLink
-              href="#"
-              isActive={page === currentPage}
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
+
+        {visiblePages.map((page, index) => {
+          if (page === "...") {
+            return (
+              <PaginationItem key={`ellipsis-${index}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            );
+          }
+          return (
+            <PaginationItem key={page}>
+              <PaginationLink
+                href="#"
+                isActive={page === currentPage}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof page === "number") {
+                    setCurrentPage(page)
+                  }
+                }}
+              >
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        })}
+
         <PaginationItem>
           <PaginationNext
             className="cursor-pointer"
-            onClick={() =>
-              setCurrentPage(Math.min(currentPage + 1, totalPages))
-            }
+            onClick={() => setCurrentPage(Math.min(currentPage + 1, totalPages))}
             aria-disabled={currentPage === totalPages || totalPages === 0}
           />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
-}
+  );
+};
