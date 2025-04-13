@@ -10,7 +10,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const response = await fetch(`https://restcountries.com/v3.1/alpha/${slug}`)
   const data = await response.json()
   const country:CountryItem = data[0]
-  countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
   if (!country) return <h1>Loading...</h1>
 

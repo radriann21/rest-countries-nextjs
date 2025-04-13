@@ -20,7 +20,7 @@ export const CountryContainer = () => {
     if (isFetched && data && countries.length === 0) {
       setCountries(data);
     }
-  }, [isFetched, data, countries.length]);
+  }, [isFetched, data, countries.length, setCountries]);
 
   if (isPending) {
     return (

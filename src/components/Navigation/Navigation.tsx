@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Sun, Moon } from "lucide-react";
 
 export const Navigation = () => {
-  const [isDark, setIsDark] = useState<Boolean | null>(null)
+  const [isDark, setIsDark] = useState<boolean | null>(null)
 
   const handleToogleTheme = () => {
     if (document.documentElement.classList.contains('dark')) {
