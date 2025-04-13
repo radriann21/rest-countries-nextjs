@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const CountryItem = ({ country }: { country: CountryItem }) => {
   return (
-    <Link href={`/country/${country.name.common.toLowerCase().trim()}`} className="cursor-pointer duration-200 transition-all hover:scale-105 shadow-md hover:shadow-lg">
+    <Link href={`/country/${country.cca3.toLowerCase()}`} className="cursor-pointer duration-200 transition-all hover:scale-105 shadow-md hover:shadow-lg">
       <article className="text-sm rounded-md flex flex-col dark:bg-dark-blue">
         <img className="rounded-t-md w-full h-[180px] object-cover" src={country.flags.png} alt={country.name.common} />
         <section className="mt-2 p-4">

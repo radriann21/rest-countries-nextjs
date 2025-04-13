@@ -4,11 +4,13 @@ type CountryItem = {
     official: string;
     nativeName: {
       [key: string]: {
-        common: string;
+        common: string,
+        official: string
       }
     }
   },
   tld: string[],
+  cca3: string,
   capital: string[],
   region: string,
   subregion: string,
@@ -17,7 +19,8 @@ type CountryItem = {
   },
   population: number,
   flags: {
-    png: string;
+    png: string,
+    svg: string
   },
   currencies: {
     [key: string]: {
